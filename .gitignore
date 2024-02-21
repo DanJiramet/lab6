@@ -1,32 +1,67 @@
-# Prerequisites
-*.d
+#include <iostream>
+#include <cmath> // Use cmath instead of math.h
+using namespace std;
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+class Circle
+{
+private:
+    float radius;
+    float area;
 
-# Precompiled Headers
-*.gch
-*.pch
+public:
+    Circle() : radius(0.0), area(0.0) // Initialize area in the constructor
+    { }
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+    Circle(float r) : radius(r), area(0.0) // Initialize area in the constructor
+    { }
 
-# Fortran module files
-*.mod
-*.smod
+    void set_radius()
+    {
+        cout << "\nEnter Radius:"; cin >> radius;
+    }
+    void show_info()
+    {
+        cout << "Radius: " << radius << " Area = " << area; // Added a space before "Area"
+    }
+    void cal_area()
+    {
+        area = M_PI * pow(radius, 2); // Added a semicolon
+    }
+    void cal_area_obj(Circle A, Circle C); // Removed semicolon after the function declaration
+    Circle ret_area_obj(Circle);
+};
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+void Circle::cal_area_obj(Circle A, Circle C) // Added a semicolon
+{
+    radius = A.radius + C.radius;
+    area = M_PI * pow(A.radius + C.radius, 2); // Added a semicolon
+}
 
-# Executables
-*.exe
-*.out
-*.app
+Circle Circle::ret_area_obj(Circle C) // Changed the return type to Circle
+{
+    Circle temp;
+    temp.radius = radius + C.radius;
+    temp.area = M_PI * pow(radius + C.radius, 2);
+    return temp;
+}
+
+int main()
+{
+    Circle A, B, C, D, E; // Added semicolon to the end
+
+    A.set_radius();
+    A.cal_area();
+    B = A;
+    B.cal_area();
+    C.cal_area();
+    D.cal_area_obj(A, C);
+    E = B.ret_area_obj(C);
+
+    cout << "\nCircle (A)"; A.show_info(); // Corrected usage of show_info()
+    cout << "\nCircle (B)"; B.show_info(); // Corrected usage of show_info()
+    cout << "\nCircle (C)"; C.show_info(); // Corrected usage of show_info()
+    cout << "\nCircle (D)"; D.show_info(); // Corrected usage of show_info()
+    cout << "\nCircle (E)"; E.show_info(); // Corrected usage of show_info()
+
+    return 0; // Added return statement
+}
